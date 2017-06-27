@@ -543,8 +543,8 @@ namespace UIUSMTGUI
             }
 
             //Remove \ at the end
-            if((keepsake.Substring(txtBackLocal.Text.Length - 1, 1)).Equals(@"\")){
-                keepsake = keepsake.Substring(0, txtBackLocal.Text.Length - 1);
+            if((keepsake.Substring(keepsake.Length - 1, 1)).Equals(@"\")){
+                keepsake = keepsake.Substring(0, keepsake.Length - 1);
             }
             //Add the specified templates to the end
             switch (boxProfiles.SelectedIndex)
