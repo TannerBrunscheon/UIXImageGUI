@@ -139,7 +139,6 @@
             resources.ApplyResources(this.txtBackLocal, "txtBackLocal");
             this.txtBackLocal.Name = "txtBackLocal";
             this.txtBackLocal.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtBackLocal_MouseClick);
-            this.txtBackLocal.TextChanged += new System.EventHandler(this.txtBackLocal_TextChanged);
             this.txtBackLocal.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBackLocal_KeyPress);
             // 
             // btnBackLocal
@@ -168,7 +167,6 @@
             this.groupBox2.Controls.Add(this.allprofileBtn);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter_1);
             // 
             // dateBtn
             // 
@@ -299,7 +297,6 @@
             this.restoreAllBtn.Name = "restoreAllBtn";
             this.restoreAllBtn.TabStop = true;
             this.restoreAllBtn.UseVisualStyleBackColor = true;
-            this.restoreAllBtn.CheckedChanged += new System.EventHandler(this.restoreAllBtn_CheckedChanged);
             // 
             // groupBox1
             // 

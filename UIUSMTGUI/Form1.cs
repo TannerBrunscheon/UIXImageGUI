@@ -66,6 +66,7 @@ namespace UIUSMTGUI
         private void selectAllBtn_CheckedChanged(object sender, EventArgs e)
         {
             {
+                //Set all items to be checked
                 if (selectAllBtn.Checked)
                 {
                     for (int i = 0; i < profilesBox.Items.Count; i++)
@@ -81,7 +82,8 @@ namespace UIUSMTGUI
 
         private void btnMigrate_Click(object sender, EventArgs e)
         {
-            
+            //Check if directory exists. If not and the user selects a template 
+            //create it
             if (!Directory.Exists(txtBackLocal.Text))
             {
                 if (boxHasEdits)
@@ -97,6 +99,8 @@ namespace UIUSMTGUI
                 
             }
             string op;
+
+            //Look at os 
             if (Environment.Is64BitOperatingSystem)
             {
                 op = "amd64";
@@ -105,12 +109,16 @@ namespace UIUSMTGUI
             {
                 op = "x86";
             }
+            //Grab root of the program
             string root = Path.GetPathRoot(Environment.SystemDirectory);
+            //Set up base args
             string args = txtBackLocal.Text + " /i:" + root + "\\USMT\\" + op + "\\migdocs.xml /i:" + root + "\\USMT\\" + op + "\\migapp.xml /i:" + root + "\\USMT\\" + op + "\\wallpaper.xml /config:" + root + "\\USMT\\" + op + "\\config.xml /l:" + root + "\\USMT\\" + op + "\\scan.log /progress:" + root + "\\USMT\\" + op + "\\progress.log /localonly /vsc /c /efs:copyraw /v:13";
+            //If user wants all profiles
             if (allprofileBtn.Checked)
             {
                 args += " /ue:iowa\\*_*";
             }
+            //If user wants specific profiles add them on an include
             else if (specificProfilesBtn.Checked)
             {
                 foreach (Object checkedItem in profilesBox.CheckedItems)
@@ -118,6 +126,8 @@ namespace UIUSMTGUI
                     args = args + " /ui:iowa\\" + checkedItem.ToString();
                 }
             }
+
+        //If user wants to do by date check if its a number if not check if its a date in specific format
             else if (dateBtn.Checked)
             {
                 int x;
@@ -141,22 +151,34 @@ namespace UIUSMTGUI
                 }
 
             }
+            //Encript if the encrypt box is filled
             if (encryptBtn.Checked)
             {
-                args += " /encrypt /key:" + encryptBox.Text;
+                if (!encryptBox.Equals(""))
+                {
+                    args += " /encrypt /key:" + encryptBox.Text;
+                }
+                else
+                {
+                    MessageBox.Show("Enter a key");
+                }
             }
+            //Overwrite if button checkecd
             if (overwriteBtn.Checked)
             {
                 args += " /o";
             }
+            //Delete previous runs if it exists so there are no errors
             if (Directory.Exists(root + "\\USMT\\" + op))
             {
                 Directory.Delete(root + "\\USMT\\" + op, true);
             }
+            //Click go!
             DialogResult result = MessageBox.Show("Please Confirm Your Details", "Confirm", MessageBoxButtons.OKCancel);
             
             if(result == DialogResult.OK)
             {
+                //Close windows create new directory on the root and run the program as admin
                 this.Visible = false;
                 moveDIR(Directory.GetCurrentDirectory() + "\\" + op, root + "\\USMT\\" + op);
 
@@ -178,10 +200,13 @@ namespace UIUSMTGUI
                 }
                 catch
                 {
+                    //If no privlages
                     MessageBox.Show("Must give elevated permssions", "ExecuteCommand");
+                    this.Visible = true;
+                    return;
                 }
 
-
+                //Sucessfully run
                 this.Visible = true;
                 if (ExitCode.ToString().Equals("0")){
                     MessageBox.Show("Ran Sucessfully", "ExecuteCommand");
@@ -211,11 +236,13 @@ namespace UIUSMTGUI
 
         private void btnRestore_Click(object sender, EventArgs e)
         {
+            //Check if folder for restoring exists
             if (!Directory.Exists(txtRestoreLocal.Text))
             {
                 MessageBox.Show("Folder not found!");
                 return;
             }
+            //Look at os
             string op;
             if (Environment.Is64BitOperatingSystem)
             {
@@ -225,8 +252,11 @@ namespace UIUSMTGUI
             {
                 op = "x86";
             }
+            //Find root
             string root = Path.GetPathRoot(Environment.SystemDirectory);
+            //Set up base args
             string args = txtRestoreLocal.Text + " /i:" + root + "\\USMT\\" + op + "\\migdocs.xml /i:" + root + "\\USMT\\" + op + "\\migapp.xml /i:" + root + "\\USMT\\" + op + "\\wallpaper.xml /config:" + root + "\\USMT\\" + op + "\\config.xml /l:" + root + "\\USMT\\" + op + "\\load.log /progress:" + root + "\\USMT\\" + op + "\\progress.log /c /v:13";
+            //Check if key is needed and user didnt enter nothing
             if (decryptBtn.Checked)
             {
                 if (!decryptBox.Equals(""))
@@ -238,7 +268,7 @@ namespace UIUSMTGUI
                     MessageBox.Show("Enter a key");
                 }
             }
-            
+            //Restore all no techs otherwise restore all
             if (restoreNoTechBtn.Checked)
             {
                 args += " /ue:iowa\\*_*";
@@ -247,6 +277,7 @@ namespace UIUSMTGUI
             {
                 Directory.Delete(root + "\\USMT\\" + op, true);
             }
+            //Ask to go
             DialogResult result = MessageBox.Show("Please Confirm Your Details", "Confirm", MessageBoxButtons.OKCancel);
 
             if (result == DialogResult.OK)
@@ -262,12 +293,24 @@ namespace UIUSMTGUI
                 ProcessInfo.Arguments = args;
                 ProcessInfo.Verb = "runas";
 
-                Process = Process.Start(ProcessInfo);
-                
-                Process.WaitForExit();
+                try
+                {
+                    Process = Process.Start(ProcessInfo);
+                    Process.WaitForExit();
 
-                ExitCode = Process.ExitCode;
-                Process.Close();
+                    ExitCode = Process.ExitCode;
+                    Process.Close();
+
+                }
+                catch
+                {
+                    //If no privlages
+                    MessageBox.Show("Must give elevated permssions", "ExecuteCommand");
+                    this.Visible = true;
+                    return;
+                }
+
+                //Sucessfully run
                 this.Visible = true;
                 if (ExitCode.ToString().Equals("0"))
                 {
@@ -283,6 +326,7 @@ namespace UIUSMTGUI
 
         private void daysBox_Enter(object sender, EventArgs e)
         {
+            //This adds ghost text
             if (daysBox.Text == "YYYY/MM/DD")
             {
                 daysBox.Text = "";
@@ -292,6 +336,7 @@ namespace UIUSMTGUI
 
         private void daysBox_Leave(object sender, EventArgs e)
         {
+            //This adds ghost text
             if (daysBox.Text == "")
             {
                 daysBox.Text = "YYYY/MM/DD";
@@ -301,6 +346,7 @@ namespace UIUSMTGUI
 
         private void specificProfilesBtn_CheckedChanged(object sender, EventArgs e)
         {
+            //Set up specific profiles stuff
             if (specificProfilesBtn.Checked)
             {
                 selectAllBtn.Enabled = true;
@@ -315,6 +361,7 @@ namespace UIUSMTGUI
 
         private void dateBtn_CheckedChanged(object sender, EventArgs e)
         {
+            //Set up date button stuff
             if (dateBtn.Checked)
             {
                 daysBox.Enabled = true;
@@ -327,6 +374,7 @@ namespace UIUSMTGUI
 
         private void decryptBtn_CheckedChanged(object sender, EventArgs e)
         {
+            //Set up decryption box
             if (decryptBtn.Checked)
             {
                 decryptBox.Enabled = true;
@@ -337,19 +385,10 @@ namespace UIUSMTGUI
             }
         }
 
-        private void restoreAllBtn_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox2_Enter_1(object sender, EventArgs e)
-        {
-
-        }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            
+            //Scan log button redirect
            string op;
            if (Environment.Is64BitOperatingSystem)
             {
@@ -372,6 +411,7 @@ namespace UIUSMTGUI
 
         private void button6_Click(object sender, EventArgs e)
         {
+            //Load log button setup
             string op;
             if (Environment.Is64BitOperatingSystem)
             {
@@ -394,6 +434,7 @@ namespace UIUSMTGUI
 
         private void button5_Click(object sender, EventArgs e)
         {
+            //Open mig viewer button
             {
                 string op;
                 if (Environment.Is64BitOperatingSystem)
@@ -418,11 +459,15 @@ namespace UIUSMTGUI
 
         private void btnBackLocal_Click(object sender, EventArgs e)
         {
+            //set the box to be what it was before adding template
             txtBackLocal.Text = keepsake;
+            //Get user choice from dialog
             DialogResult dialog = folderBrowserDialog.ShowDialog();
             string selection = folderBrowserDialog.SelectedPath;
+            //Incase user presses cancel
             if (selection != "")
             {
+                //Make this the new user choice
                 txtBackLocal.Text = selection;
                 boxHasEdits = false;
                 keepsake = txtBackLocal.Text;
@@ -432,8 +477,10 @@ namespace UIUSMTGUI
 
         private void btnRestoreLocal_Click(object sender, EventArgs e)
         {
+            //Get user choice from dialog
             DialogResult dialog = folderBrowserDialog.ShowDialog();
             string selection = folderBrowserDialog.SelectedPath;
+            //Incase user presses cancel
             if (selection != "")
             {
                 txtRestoreLocal.Text = selection;
@@ -443,6 +490,7 @@ namespace UIUSMTGUI
 
         private void btnProgress_Click(object sender, EventArgs e)
         {
+            //Set up progress button
             string op;
             if (Environment.Is64BitOperatingSystem)
             {
@@ -465,8 +513,10 @@ namespace UIUSMTGUI
 
         private void btnTemplate_CheckedChanged(object sender, EventArgs e)
         {
+            //If it is checked
             if(btnTemplate.Checked)
             {
+                //Check for folder
                 if (!Directory.Exists(txtBackLocal.Text))
                 {
                     MessageBox.Show("Folder not found!");
@@ -477,27 +527,26 @@ namespace UIUSMTGUI
             }
             else
             {
+                //If its unchecked set the text back 
                 boxProfiles.Enabled = false;
                 txtBackLocal.Text = keepsake;
             }
         }
 
-        private void txtBackLocal_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
 
         private void boxProfiles_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //If box doesnt have edits make a backup
             if (!boxHasEdits)
             {
                 keepsake = txtBackLocal.Text;
             }
 
-
+            //Remove \ at the end
             if((txtBackLocal.Text.Substring(txtBackLocal.Text.Length - 1, 1)).Equals(@"\")){
                 txtBackLocal.Text = txtBackLocal.Text.Substring(0, txtBackLocal.Text.Length - 1);
             }
+            //Add the specified templates to the end
             switch (boxProfiles.SelectedIndex)
             {
                 case 0:
@@ -542,11 +591,7 @@ namespace UIUSMTGUI
             };
         }
 
-        private void groupBox6_Enter(object sender, EventArgs e)
-        {
-
-        }
-
+        //If buttons pressed set new keepsake
         private void txtBackLocal_KeyPress(object sender, KeyPressEventArgs e)
         {
             boxHasEdits = false;
@@ -554,7 +599,7 @@ namespace UIUSMTGUI
             btnTemplate.Checked = false;
         }
 
-
+        //If user clicks in set text box back
         private void txtBackLocal_MouseClick(object sender, MouseEventArgs e)
         {
             boxHasEdits = false;
