@@ -543,8 +543,8 @@ namespace UIUSMTGUI
             }
 
             //Remove \ at the end
-            if((txtBackLocal.Text.Substring(txtBackLocal.Text.Length - 1, 1)).Equals(@"\")){
-                txtBackLocal.Text = txtBackLocal.Text.Substring(0, txtBackLocal.Text.Length - 1);
+            if((keepsake.Substring(txtBackLocal.Text.Length - 1, 1)).Equals(@"\")){
+                keepsake = keepsake.Substring(0, txtBackLocal.Text.Length - 1);
             }
             //Add the specified templates to the end
             switch (boxProfiles.SelectedIndex)
@@ -602,9 +602,12 @@ namespace UIUSMTGUI
         //If user clicks in set text box back
         private void txtBackLocal_MouseClick(object sender, MouseEventArgs e)
         {
-            boxHasEdits = false;
-            txtBackLocal.Text = keepsake;
-            btnTemplate.Checked = false;
+            if (boxHasEdits == true)
+            {
+                boxHasEdits = false;
+                txtBackLocal.Text = keepsake;
+                btnTemplate.Checked = false;
+            }
         }
     }
 }
