@@ -157,11 +157,11 @@ namespace UIUSMTGUI
                         MessageBox.Show("Enter in a positive number of days", "Error");
                         return;
                     }
-                    args += "/uel:" + daysBox.Text;
+                    args += " /uel:" + daysBox.Text;
                 }
                 else if (Regex.IsMatch(daysBox.Text, "^\\d{4}\\/(0?[1-9]|1[012])\\/(0?[1-9]|[12][0-9]|3[01])$"))
                 {
-                    args += "/uel:" + daysBox.Text;
+                    args += " /uel:" + daysBox.Text;
                 }
                 else
                 {
@@ -497,6 +497,7 @@ namespace UIUSMTGUI
             if (keepsake != null)
             {
                 txtBackLocal.Text = keepsake;
+                btnTemplate.Checked = false;
             }
             //Get user choice from dialog
             DialogResult dialog = folderBrowserDialog.ShowDialog();
@@ -568,6 +569,7 @@ namespace UIUSMTGUI
                     btnTemplate.Checked = false;
                     return;
                 }
+                changeTemplate();
                 boxProfiles.Enabled = true;
             }
             else
@@ -581,66 +583,7 @@ namespace UIUSMTGUI
 
         private void boxProfiles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //If box doesnt have edits make a backup
-            if (!boxHasEdits)
-            {
-                keepsake = txtBackLocal.Text;
-                foreach (DriveInfo driveInfo in fullinfos)
-                {
-                    if (Path.GetPathRoot(keepsake) == driveInfo.RootDirectory.FullName)
-                    {
-                        grpOutput.Text = "Output (" + driveInfo.VolumeLabel + ")";
-                    }
-                }
-            }
-
-            //Remove \ at the end
-            if((keepsake.Substring(keepsake.Length - 1, 1)).Equals(@"\")){
-                keepsake = keepsake.Substring(0, keepsake.Length - 1);
-            }
-            //Add the specified templates to the end
-            switch (boxProfiles.SelectedIndex)
-            {
-                case 0:
-                    txtBackLocal.Text = keepsake + @"\" + Environment.MachineName;
-                    boxHasEdits = true;
-                        break;
-                case 1:
-                    txtBackLocal.Text = keepsake + @"\" + Environment.MachineName + "~" + DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
-                    boxHasEdits = true;
-                    break;
-                case 2:
-                    txtBackLocal.Text = keepsake + @"\" + DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.GetCultureInfo("en-US")) + "~" + Environment.MachineName;
-                    boxHasEdits = true;
-                    break;
-                case 3:
-                    txtBackLocal.Text = keepsake + @"\";
-                    int i = 0;
-                    foreach(Object checkedItem in profilesBox.CheckedItems)
-                    {
-                        if (i < 1)
-                        {
-                            txtBackLocal.Text += checkedItem.ToString();
-                            i++;
-                        }
-                    }
-                    boxHasEdits = true;
-                        break;
-                case 4:
-                    txtBackLocal.Text = keepsake + @"\";
-                    int j = 0;
-                    foreach (Object checkedItem in profilesBox.CheckedItems)
-                    {
-                        if (j < 3)
-                        {
-                            txtBackLocal.Text += checkedItem.ToString() + "~";
-                            j++;
-                        }
-                    }
-                    boxHasEdits = true;
-                    break;
-
-            };
+            changeTemplate();
         }
 
         //If buttons pressed set new keepsake
@@ -683,6 +626,73 @@ namespace UIUSMTGUI
                 boxLAE.Enabled = false;
                 boxLAE.Text = "";
             }
+        }
+        private void changeTemplate()
+        {
+
+            if (!boxHasEdits)
+            {
+                keepsake = txtBackLocal.Text;
+                foreach (DriveInfo driveInfo in fullinfos)
+                {
+                    if (Path.GetPathRoot(keepsake) == driveInfo.RootDirectory.FullName)
+                    {
+                        grpOutput.Text = "Output (" + driveInfo.VolumeLabel + ")";
+                    }
+                }
+            }
+            if (!keepsake.EndsWith(@"\")){
+                keepsake += @"\";
+            }
+            
+            
+            //Add the specified templates to the end
+            switch (boxProfiles.SelectedIndex)
+            {
+                case 0:
+                    txtBackLocal.Text = keepsake + Environment.MachineName;
+                    boxHasEdits = true;
+                    break;
+                case 1:
+                    txtBackLocal.Text = keepsake + Environment.MachineName + "~" + DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+                    boxHasEdits = true;
+                    break;
+                case 2:
+                    txtBackLocal.Text = keepsake + DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.GetCultureInfo("en-US")) + "~" + Environment.MachineName;
+                    boxHasEdits = true;
+                    break;
+                case 3:
+                    txtBackLocal.Text = keepsake;
+                    int i = 0;
+                    foreach (Object checkedItem in profilesBox.CheckedItems)
+                    {
+                        if (i < 1)
+                        {
+                            txtBackLocal.Text += checkedItem.ToString();
+                            i++;
+                        }
+                    }
+                    boxHasEdits = true;
+                    break;
+                case 4:
+                    txtBackLocal.Text = keepsake;
+                    int j = 0;
+                    foreach (Object checkedItem in profilesBox.CheckedItems)
+                    {
+                        if (j < 3)
+                        {
+                            txtBackLocal.Text += checkedItem.ToString();
+                            if (j < 2)
+                            {
+                                txtBackLocal.Text += "~";
+                            }
+                            j++;
+                        }
+                    }
+                    boxHasEdits = true;
+                    break;
+
+            };
         }
     }
 }
