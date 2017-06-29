@@ -3,6 +3,7 @@
 
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -17,6 +18,8 @@ namespace UIUSMTGUI
         private bool boxHasEdits = false;
         //Initialize keepsake as a string to store the users input in the output text box
         private string keepsake;
+        //Hold all Drive information 
+        IList<DriveInfo> fullinfos = new List<DriveInfo>();
         public Form1()
         {
             InitializeComponent();
@@ -25,7 +28,23 @@ namespace UIUSMTGUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-          
+            IList<DriveInfo> removeinfos = new List<DriveInfo>();
+            foreach (DriveInfo driveInfo in DriveInfo.GetDrives())
+            {
+                fullinfos.Add(driveInfo);
+                if (driveInfo.DriveType == DriveType.Removable)
+                {
+                    removeinfos.Add(driveInfo);
+                }
+            }
+            if (removeinfos.Count != 0)
+            {
+                txtBackLocal.Text = removeinfos[0].RootDirectory.FullName;
+                grpOutput.Text = "Output (" + removeinfos[0].VolumeLabel + ")";
+            }
+
+
+
             //FOUND AT https://stackoverflow.com/questions/485341/in-vb-net-how-do-you-get-a-list-of-all-users-in-the-current-windows-machine by Nathan W
             // On load grab all user profile on the computer
             var i = 0;
@@ -252,11 +271,25 @@ namespace UIUSMTGUI
             {
                 op = "x86";
             }
+            
             //Find root
             string root = Path.GetPathRoot(Environment.SystemDirectory);
             //Set up base args
-            string args = txtRestoreLocal.Text + " /i:" + root + "\\USMT\\" + op + "\\migdocs.xml /i:" + root + "\\USMT\\" + op + "\\migapp.xml /i:" + root + "\\USMT\\" + op + "\\wallpaper.xml /config:" + root + "\\USMT\\" + op + "\\config.xml /l:" + root + "\\USMT\\" + op + "\\load.log /progress:" + root + "\\USMT\\" + op + "\\progress.log /c /v:13";
-            //Check if key is needed and user didnt enter nothing
+            string args = txtRestoreLocal.Text + " /i:" + root + "\\USMT\\" + op + "\\migdocs.xml /i:" + root + "\\USMT\\" + op + "\\migapp.xml /i:" + root + "\\USMT\\" + op + "\\wallpaper.xml /config:" + root + "\\USMT\\" + op + "\\config.xml /l:" + root + "\\USMT\\" + op + "\\load.log /progress:" + root + "\\USMT\\" + op + "\\progress.log /c /v:13 ";
+            
+            if (boxLAC.Checked && txtPassword.Text == "")
+            {
+                args += " /LAC";
+            }
+            else if (boxLAC.Checked)
+            {
+                args += "/LAC:" + txtPassword.Text;
+            }
+            if (boxLAC.Checked && boxLAE.Checked)
+            {
+                args += " /LAE";
+            }
+            //Check if key is needed and what user entered
             if (decryptBtn.Checked)
             {
                 if (!decryptBox.Equals(""))
@@ -369,6 +402,7 @@ namespace UIUSMTGUI
             else
             {
                 daysBox.Enabled = false;
+                daysBox.Text = "YYYY/MM/DD";
             }
         }
 
@@ -471,6 +505,13 @@ namespace UIUSMTGUI
                 txtBackLocal.Text = selection;
                 boxHasEdits = false;
                 keepsake = txtBackLocal.Text;
+                foreach (DriveInfo driveInfo in fullinfos)
+                {
+                    if (Path.GetPathRoot(keepsake) == driveInfo.RootDirectory.FullName) {
+                        grpOutput.Text = "Output (" + driveInfo.VolumeLabel + ")";
+                    }
+                }
+                
             }
 
         }
@@ -540,6 +581,13 @@ namespace UIUSMTGUI
             if (!boxHasEdits)
             {
                 keepsake = txtBackLocal.Text;
+                foreach (DriveInfo driveInfo in fullinfos)
+                {
+                    if (Path.GetPathRoot(keepsake) == driveInfo.RootDirectory.FullName)
+                    {
+                        grpOutput.Text = "Output (" + driveInfo.VolumeLabel + ")";
+                    }
+                }
             }
 
             //Remove \ at the end
@@ -597,6 +645,13 @@ namespace UIUSMTGUI
             boxHasEdits = false;
             keepsake = txtBackLocal.Text;
             btnTemplate.Checked = false;
+            foreach (DriveInfo driveInfo in fullinfos)
+            {
+                if (Path.GetPathRoot(keepsake) == driveInfo.RootDirectory.FullName)
+                {
+                    grpOutput.Text = "Output (" + driveInfo.VolumeLabel + ")";
+                }
+            }
         }
 
         //If user clicks in set text box back
@@ -607,6 +662,22 @@ namespace UIUSMTGUI
                 boxHasEdits = false;
                 txtBackLocal.Text = keepsake;
                 btnTemplate.Checked = false;
+            }
+        }
+
+        private void boxLAC_CheckedChanged(object sender, EventArgs e)
+        {
+            if (boxLAC.Checked)
+            {
+                txtPassword.Enabled = true;
+                boxLAE.Enabled = true;
+            }
+            else
+            {
+                txtPassword.Enabled = false;
+                txtPassword.Text = "";
+                boxLAE.Enabled = false;
+                boxLAE.Text = "";
             }
         }
     }
