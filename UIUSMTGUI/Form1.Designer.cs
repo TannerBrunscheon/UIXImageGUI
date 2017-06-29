@@ -60,6 +60,8 @@
             this.btnRestoreLocal = new System.Windows.Forms.Button();
             this.txtRestoreLocal = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnDateRestore = new System.Windows.Forms.RadioButton();
+            this.txtRestoreDate = new System.Windows.Forms.TextBox();
             this.restoreNoTechBtn = new System.Windows.Forms.RadioButton();
             this.restoreAllBtn = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -70,11 +72,11 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnMIG = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.btnProgress = new System.Windows.Forms.Button();
             this.btnBackLog = new System.Windows.Forms.Button();
-            this.btnMIG = new System.Windows.Forms.Button();
             this.btnRestoreLog = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -336,11 +338,26 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.btnDateRestore);
+            this.groupBox4.Controls.Add(this.txtRestoreDate);
             this.groupBox4.Controls.Add(this.restoreNoTechBtn);
             this.groupBox4.Controls.Add(this.restoreAllBtn);
             resources.ApplyResources(this.groupBox4, "groupBox4");
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.TabStop = false;
+            // 
+            // btnDateRestore
+            // 
+            resources.ApplyResources(this.btnDateRestore, "btnDateRestore");
+            this.btnDateRestore.Name = "btnDateRestore";
+            this.btnDateRestore.TabStop = true;
+            this.btnDateRestore.UseVisualStyleBackColor = true;
+            // 
+            // txtRestoreDate
+            // 
+            resources.ApplyResources(this.txtRestoreDate, "txtRestoreDate");
+            this.txtRestoreDate.Name = "txtRestoreDate";
+            this.txtRestoreDate.Tag = "";
             // 
             // restoreNoTechBtn
             // 
@@ -394,6 +411,7 @@
             this.tabPage3.BackColor = System.Drawing.Color.LightGoldenrodYellow;
             this.tabPage3.Controls.Add(this.label4);
             this.tabPage3.Controls.Add(this.label3);
+            this.tabPage3.Controls.Add(this.btnMIG);
             this.tabPage3.Controls.Add(this.richTextBox1);
             this.tabPage3.Controls.Add(this.groupBox6);
             resources.ApplyResources(this.tabPage3, "tabPage3");
@@ -409,16 +427,23 @@
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
             // 
+            // btnMIG
+            // 
+            resources.ApplyResources(this.btnMIG, "btnMIG");
+            this.btnMIG.Name = "btnMIG";
+            this.btnMIG.UseVisualStyleBackColor = true;
+            this.btnMIG.Click += new System.EventHandler(this.button5_Click);
+            // 
             // richTextBox1
             // 
             resources.ApplyResources(this.richTextBox1, "richTextBox1");
             this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
             // 
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.btnProgress);
             this.groupBox6.Controls.Add(this.btnBackLog);
-            this.groupBox6.Controls.Add(this.btnMIG);
             this.groupBox6.Controls.Add(this.btnRestoreLog);
             resources.ApplyResources(this.groupBox6, "groupBox6");
             this.groupBox6.Name = "groupBox6";
@@ -437,13 +462,6 @@
             this.btnBackLog.Name = "btnBackLog";
             this.btnBackLog.UseVisualStyleBackColor = true;
             this.btnBackLog.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // btnMIG
-            // 
-            resources.ApplyResources(this.btnMIG, "btnMIG");
-            this.btnMIG.Name = "btnMIG";
-            this.btnMIG.UseVisualStyleBackColor = true;
-            this.btnMIG.Click += new System.EventHandler(this.button5_Click);
             // 
             // btnRestoreLog
             // 
@@ -545,6 +563,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox boxLAE;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.RadioButton btnDateRestore;
+        private System.Windows.Forms.TextBox txtRestoreDate;
     }
 }
 

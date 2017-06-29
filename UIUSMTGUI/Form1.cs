@@ -303,6 +303,29 @@ namespace UIUSMTGUI
             {
                 args += " /ue:iowa\\*_*";
             }
+            else if (btnDateRestore.Checked)
+            {
+                int x;
+                if (Int32.TryParse(txtRestoreDate.Text, out x))
+                {
+                    if (x < 0)
+                    {
+                        MessageBox.Show("Enter in a positive number of days", "Error");
+                        return;
+                    }
+                    args += " /uel:" + txtRestoreDate.Text;
+                }
+                else if (Regex.IsMatch(daysBox.Text, "^\\d{4}\\/(0?[1-9]|1[012])\\/(0?[1-9]|[12][0-9]|3[01])$"))
+                {
+                    args += " /uel:" + txtRestoreDate.Text;
+                }
+                else
+                {
+                    MessageBox.Show("Enter in day in correct format", "Error");
+                    return;
+                }
+
+            }
             if (Directory.Exists(root + "\\USMT\\" + op))
             {
                 Directory.Delete(root + "\\USMT\\" + op, true);
@@ -691,5 +714,6 @@ namespace UIUSMTGUI
 
             };
         }
+
     }
 }
