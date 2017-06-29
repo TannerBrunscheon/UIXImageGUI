@@ -74,10 +74,6 @@
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
-    <None Include="bin\Debug\UIUSMTGUI.exe.config" />
-    <None Include="bin\Debug\UIUSMTGUI.vshost.exe.config" />
-    <None Include="bin\Debug\UIUSMTGUI.vshost.exe.manifest" />
-    <None Include="bin\Release\UIUSMTGUI.exe.config" />
     <None Include="ClassDiagram1.cd" />
     <None Include="data\amd64\DLManifests7\AccessibilityCpl-DL.man" />
     <None Include="data\amd64\DLManifests7\CAPI2_certs-DL.man" />
@@ -681,13 +677,6 @@
     <None Include="Resources\DomeWordLeft BLACK.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\aa\UIUSMTGUI.resources.dll" />
-    <Content Include="bin\Debug\UIUSMTGUI.exe" />
-    <Content Include="bin\Debug\UIUSMTGUI.pdb" />
-    <Content Include="bin\Debug\UIUSMTGUI.vshost.exe" />
-    <Content Include="bin\Release\aa\UIUSMTGUI.resources.dll" />
-    <Content Include="bin\Release\UIUSMTGUI.exe" />
-    <Content Include="bin\Release\UIUSMTGUI.pdb" />
     <Content Include="data\amd64\cmi2migxml.dll" />
     <Content Include="data\amd64\config.xml" />
     <Content Include="data\amd64\Config_AppsAndSettings.xml" />

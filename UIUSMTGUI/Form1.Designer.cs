@@ -77,6 +77,7 @@
             this.btnMIG = new System.Windows.Forms.Button();
             this.btnRestoreLog = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.grpOutput.SuspendLayout();
@@ -451,6 +452,11 @@
             this.btnRestoreLog.UseVisualStyleBackColor = true;
             this.btnRestoreLog.Click += new System.EventHandler(this.button6_Click);
             // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "openFileDialog";
+            resources.ApplyResources(this.openFileDialog, "openFileDialog");
+            // 
             // Form1
             // 
             this.AcceptButton = this.btnMigrate;
@@ -538,6 +544,7 @@
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox boxLAE;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }
 

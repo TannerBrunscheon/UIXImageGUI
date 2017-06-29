@@ -494,7 +494,10 @@ namespace UIUSMTGUI
         private void btnBackLocal_Click(object sender, EventArgs e)
         {
             //set the box to be what it was before adding template
-            txtBackLocal.Text = keepsake;
+            if (keepsake != null)
+            {
+                txtBackLocal.Text = keepsake;
+            }
             //Get user choice from dialog
             DialogResult dialog = folderBrowserDialog.ShowDialog();
             string selection = folderBrowserDialog.SelectedPath;
@@ -519,8 +522,9 @@ namespace UIUSMTGUI
         private void btnRestoreLocal_Click(object sender, EventArgs e)
         {
             //Get user choice from dialog
-            DialogResult dialog = folderBrowserDialog.ShowDialog();
-            string selection = folderBrowserDialog.SelectedPath;
+            DialogResult dialog = openFileDialog.ShowDialog();
+            string selection = Path.GetDirectoryName(openFileDialog.FileName);
+            selection = selection.Substring(0, selection.Length - 5);
             //Incase user presses cancel
             if (selection != "")
             {
