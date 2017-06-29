@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.grpOutput = new System.Windows.Forms.GroupBox();
             this.btnTemplate = new System.Windows.Forms.CheckBox();
             this.boxProfiles = new System.Windows.Forms.ComboBox();
             this.txtBackLocal = new System.Windows.Forms.TextBox();
@@ -50,6 +50,12 @@
             this.encryptBtn = new System.Windows.Forms.CheckBox();
             this.btnMigrate = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.boxLAE = new System.Windows.Forms.CheckBox();
+            this.boxLAC = new System.Windows.Forms.CheckBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.btnRestoreLocal = new System.Windows.Forms.Button();
             this.txtRestoreLocal = new System.Windows.Forms.TextBox();
@@ -62,6 +68,7 @@
             this.decryptBtn = new System.Windows.Forms.CheckBox();
             this.btnRestore = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -70,22 +77,19 @@
             this.btnMIG = new System.Windows.Forms.Button();
             this.btnRestoreLog = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.label4 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.groupBox5.SuspendLayout();
+            this.grpOutput.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.groupBox7.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -101,7 +105,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.LightGoldenrodYellow;
-            this.tabPage1.Controls.Add(this.groupBox5);
+            this.tabPage1.Controls.Add(this.grpOutput);
             this.tabPage1.Controls.Add(this.overwriteBtn);
             this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.groupBox3);
@@ -109,15 +113,15 @@
             resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Name = "tabPage1";
             // 
-            // groupBox5
+            // grpOutput
             // 
-            this.groupBox5.Controls.Add(this.btnTemplate);
-            this.groupBox5.Controls.Add(this.boxProfiles);
-            this.groupBox5.Controls.Add(this.txtBackLocal);
-            this.groupBox5.Controls.Add(this.btnBackLocal);
-            resources.ApplyResources(this.groupBox5, "groupBox5");
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.TabStop = false;
+            this.grpOutput.Controls.Add(this.btnTemplate);
+            this.grpOutput.Controls.Add(this.boxProfiles);
+            this.grpOutput.Controls.Add(this.txtBackLocal);
+            this.grpOutput.Controls.Add(this.btnBackLocal);
+            resources.ApplyResources(this.grpOutput, "grpOutput");
+            this.grpOutput.Name = "grpOutput";
+            this.grpOutput.TabStop = false;
             // 
             // btnTemplate
             // 
@@ -256,14 +260,58 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.LightGoldenrodYellow;
+            this.tabPage2.Controls.Add(this.groupBox8);
             this.tabPage2.Controls.Add(this.pictureBox2);
-            this.tabPage2.Controls.Add(this.pictureBox1);
             this.tabPage2.Controls.Add(this.groupBox7);
             this.tabPage2.Controls.Add(this.groupBox4);
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Controls.Add(this.btnRestore);
             resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.txtPassword);
+            this.groupBox8.Controls.Add(this.label5);
+            this.groupBox8.Controls.Add(this.boxLAE);
+            this.groupBox8.Controls.Add(this.boxLAC);
+            resources.ApplyResources(this.groupBox8, "groupBox8");
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.TabStop = false;
+            // 
+            // txtPassword
+            // 
+            resources.ApplyResources(this.txtPassword, "txtPassword");
+            this.txtPassword.Name = "txtPassword";
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            // 
+            // boxLAE
+            // 
+            resources.ApplyResources(this.boxLAE, "boxLAE");
+            this.boxLAE.Checked = true;
+            this.boxLAE.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.boxLAE.Name = "boxLAE";
+            this.boxLAE.UseVisualStyleBackColor = true;
+            // 
+            // boxLAC
+            // 
+            resources.ApplyResources(this.boxLAC, "boxLAC");
+            this.boxLAC.Checked = true;
+            this.boxLAC.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.boxLAC.Name = "boxLAC";
+            this.boxLAC.UseVisualStyleBackColor = true;
+            this.boxLAC.CheckedChanged += new System.EventHandler(this.boxLAC_CheckedChanged);
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::UIUSMTGUI.Properties.Resources.DomeWordLeft_BLACK;
+            resources.ApplyResources(this.pictureBox2, "pictureBox2");
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.TabStop = false;
             // 
             // groupBox7
             // 
@@ -350,6 +398,11 @@
             resources.ApplyResources(this.tabPage3, "tabPage3");
             this.tabPage3.Name = "tabPage3";
             // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            // 
             // label3
             // 
             resources.ApplyResources(this.label3, "label3");
@@ -398,25 +451,6 @@
             this.btnRestoreLog.UseVisualStyleBackColor = true;
             this.btnRestoreLog.Click += new System.EventHandler(this.button6_Click);
             // 
-            // label4
-            // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.Name = "label4";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::UIUSMTGUI.Properties.Resources.iowa_hawkeyes_logo_black_transparent;
-            resources.ApplyResources(this.pictureBox1, "pictureBox1");
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::UIUSMTGUI.Properties.Resources.DomeWordLeft_BLACK;
-            resources.ApplyResources(this.pictureBox2, "pictureBox2");
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.TabStop = false;
-            // 
             // Form1
             // 
             this.AcceptButton = this.btnMigrate;
@@ -431,13 +465,16 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
+            this.grpOutput.ResumeLayout(false);
+            this.grpOutput.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -447,8 +484,6 @@
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.groupBox6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -490,15 +525,19 @@
         private System.Windows.Forms.TextBox txtRestoreLocal;
         private System.Windows.Forms.Button btnProgress;
         private System.Windows.Forms.Button btnBackLocal;
-        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox grpOutput;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox boxProfiles;
         private System.Windows.Forms.CheckBox btnTemplate;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.CheckBox boxLAC;
+        private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox boxLAE;
     }
 }
 
