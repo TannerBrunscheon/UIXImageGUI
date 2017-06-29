@@ -105,11 +105,7 @@ namespace UIUSMTGUI
             //create it
             if (!Directory.Exists(txtBackLocal.Text))
             {
-                if (boxHasEdits)
-                {
-                    Directory.CreateDirectory(txtBackLocal.Text);
-                }
-                else
+                if (!boxHasEdits)
                 {
                     MessageBox.Show("Folder Not Found!");
 
@@ -199,6 +195,7 @@ namespace UIUSMTGUI
             {
                 //Close windows create new directory on the root and run the program as admin
                 this.Visible = false;
+                Directory.CreateDirectory(txtBackLocal.Text);
                 moveDIR(Directory.GetCurrentDirectory() + "\\" + op, root + "\\USMT\\" + op);
 
                 int ExitCode =-1;
@@ -283,7 +280,7 @@ namespace UIUSMTGUI
             }
             else if (boxLAC.Checked)
             {
-                args += "/LAC:" + txtPassword.Text;
+                args += " /LAC:" + txtPassword.Text;
             }
             if (boxLAC.Checked && boxLAE.Checked)
             {
